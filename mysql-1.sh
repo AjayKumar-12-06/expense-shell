@@ -45,10 +45,9 @@ validate $? "started mysql"
 
 mysql -h myfooddy.fun -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
 if [ $? -ne 0 ]; then
-    echo "setting root password if not"
-
-        mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
-        validate $? "setting root password"
+    echo "setting root password if not" &>>$LOG_FILE
+    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
+    validate $? "setting root password"
 else
     echo "mysql root password already set $Y SKIPPING $N"
 fi
