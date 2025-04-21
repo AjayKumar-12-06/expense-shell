@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_FOLDER="/var/log/expenses"
+LOG_FOLDER="/var/log/expense"
 script_name=$(echo $0 | cut -d " " -f1)
 TIMESTAMP=$(date +%y-%m-%d-%H-%M-%S)
 LOG_FILE="$LOG_FOLDER/$script_name-$TIMESTAMP".log
