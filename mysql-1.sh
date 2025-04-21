@@ -1,18 +1,18 @@
 #!/bin/bash
 
-USERID=$(id -u)
-
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m"
-N="\e[0m"
-
 LOG_FOLDER="/var/log/expenses"
 script_name=$(echo $0 | cut -d " " -f1)
 TIMESTAMP=$(date +%y-%m-%d-%H-%M-%S)
 LOG_FILE="$LOG_FOLDER/$script_name-$TIMESTAMP".log
 
 mkdir -p $LOGS_FOLDER
+
+USERID=$(id -u)
+
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
 
 check_root(){
     if [ $USERID -ne 0 ]; then
@@ -21,7 +21,6 @@ check_root(){
     fi
 }
 
-check_root
 
 validate(){
     if [ $1 -ne 0 ]; then
@@ -33,6 +32,8 @@ validate(){
 }
 
 echo "code execution at $(date)"
+
+check_root
 
 dnf install mysql-server -y &>>$LOG_FILE
 validate $? "installing mysql server"
@@ -46,7 +47,7 @@ validate $? "started mysql"
 mysql -h myfooddy.fun -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
 if [ $? -ne 0 ]; then
     echo "setting root password if not" &>>$LOG_FILE
-    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
+    mysql_secure_installation --set-root-pass ExpenseApp@1
     validate $? "setting root password"
 else
     echo "mysql root password already set $Y SKIPPING $N"
