@@ -28,7 +28,7 @@ validate(){
         echo -e " $2 $R failure $N"
         exit 1
     else
-        echo " $2 $R success $N"
+        echo -e " $2 $R success $N"
     fi
 }
 
@@ -37,10 +37,10 @@ echo "code execution at $(date)"
 dnf install mysql-server -y &>>$LOG_FILE
 validate $? "installing mysql server"
 
-systemctl enable mysql &>>$LOG_FILE
+systemctl enable mysqld &>>$LOG_FILE
 validate $? "enable mysql"
 
-systemctl start mysql &>>$LOG_FILE
+systemctl start mysqld &>>$LOG_FILE
 validate $? "started mysql"
 
 mysql -h myfooddy.fun -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
@@ -50,5 +50,5 @@ if [ $? -ne 0 ]; then
         mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOG_FILE
         validate $? "setting root password"
 else
-    echo "mysql root password already set"
+    echo "mysql root password already set $Y SKIPPING $N"
 fi
