@@ -7,7 +7,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-LOG_FOLDER="/var/log/expenses"
+LOG_FOLDER="var/log/expense-1"
 script_name=$(echo $0 | cut -d " " -f1)
 TIMESTAMP=$(date +%y-%m-%d-%H-%M-%S)
 LOG_FILE="$LOG_FOLDER/$script_name-$TIMESTAMP".log
