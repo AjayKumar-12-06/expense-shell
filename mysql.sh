@@ -35,10 +35,10 @@ check_root
 
 validate(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2 Installing ...$R Failure $N"
+        echo -e "$2 $R Failure $N"
         exit 1
     else
-        echo -e "$2 Installing $G success"
+        echo -e "$2 $G success $N"
     fi
 }
 
@@ -56,9 +56,11 @@ validate $? "started mysql"
 mysql -h myfooddy.fun -u root -pExpenseApp@1 -e 'show databases;' &>>$LOG_FILE
 if [ $? -ne 0 ]
 then
-    echo "Mysql root password is not setup, setting now"
+    echo "Mysql root password is not setup, setting now" &>>$LOG_FILE
     mysql_secure_installation --set-root-pass ExpenseApp@1
     validate $? "setting root password"
+else
+    echo -e "Root password already setup $Y Skipping $N"
 fi
 
 
